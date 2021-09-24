@@ -1,8 +1,14 @@
 my_list <- read.csv(file = "tmp/Menyuan_202011.csv")
-for(i in 1:dim(my_list)[1]){
+pb <- txtProgressBar(style=3)
+n <- 1:dim(my_list)[1]
+
+for(i in n){
+  setTxtProgressBar(pb, i/n)
+  
   if(my_list$Species[i]=="Empty"){
     next
-  }else{
+  }
+  else{
     image.from <- paste(my_list$Directory[i],my_list$FileName[i],sep = "/")
     image.to <- paste("F:/Menyuan_202011_species",my_list$Station[i],my_list$Species[i], sep = "/")
     
@@ -25,3 +31,4 @@ for(i in 1:dim(my_list)[1]){
     file.copy(from = image.from, to = image.to)
   }
 }
+close(pb)
